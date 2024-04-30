@@ -22,7 +22,8 @@ public class Product implements Serializable {
     private String imgUrl;
 
 
-    @Transient
+    @ManyToMany
+    @JoinTable(name="tb_product_category", joinColumns = @JoinColumn(name ="product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
 
@@ -78,6 +79,9 @@ public class Product implements Serializable {
         this.price = price;
     }
 
+    public Set<Category> getCategories() {
+        return categories;
+    }
 
     @Override
     public boolean equals(Object o) {
