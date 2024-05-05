@@ -2,6 +2,7 @@ package com.joaolima.demo.services;
 
 import com.joaolima.demo.entities.User;
 import com.joaolima.demo.repositories.UserRepository;
+import com.joaolima.demo.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,10 @@ public class UserServices {
     public List<User> findAll() {
         return repository.findAll();
     }
+
     public User findById(Long id){
         Optional<User> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj) {
